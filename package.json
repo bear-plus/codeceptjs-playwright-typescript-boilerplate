@@ -1,0 +1,36 @@
+{
+  "name": "codeceptjs-playwright-typescript-boilerplate",
+  "version": "1.0.0",
+  "description": "CodeceptJS Playwright Typescript Boilerplate",
+  "scripts": {
+    "test": "npm run test:chrome",
+    "test:parallel": "npx codeceptjs run-workers 2",
+    "test:all": "npx codeceptjs run-multiple desktop --steps",
+    "test:chrome": "npx codeceptjs run-multiple desktop:chromium --steps",
+    "test:firefox": "npx codeceptjs run-multiple desktop:firefox --steps",
+    "test:safari": "npx codeceptjs run-multiple desktop:webkit --steps"
+  },
+  "keywords": [
+    "qa",
+    "e2e",
+    "test",
+    "automation",
+    "codeceptjs",
+    "playwright",
+    "typescript"
+  ],
+  "author": "Ruslan Kazakov <ruslan@bear.plus>",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "axe-playwright": "^1.2.3",
+    "codeceptjs": "^3.5.5",
+    "dotenv": "^16.3.1",
+    "playwright": "^1.37.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}

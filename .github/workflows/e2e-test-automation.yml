@@ -1,0 +1,95 @@
+name: E2E Test Automation
+
+on: [ push ]
+
+jobs:
+  chrome:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.1-jammy
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Chrome scenarios
+        run: npm run test:chrome
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          HEADLESS: ${{ vars.HEADLESS }}
+          OUTPUT_PATH: output-chrome
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: chrome-artifacts
+          path: output-chrome
+          retention-days: 30
+
+  firefox:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.1-jammy
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Firefox scenarios
+        run: npm run test:firefox
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          HEADLESS: ${{ vars.HEADLESS }}
+          OUTPUT_PATH: output-firefox
+          # Workaround to fix GitHub Actions issue:
+          # Running Nightly as root in a regular user's session is not supported.
+          # See https://github.com/microsoft/playwright/issues/6500
+          HOME: /root
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: firefox-artifacts
+          path: output-firefox
+          retention-days: 30
+
+  safari:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.1-jammy
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Safari scenarios
+        run: npm run test:safari
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          HEADLESS: ${{ vars.HEADLESS }}
+          OUTPUT_PATH: output-safari
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: safari-artifacts
+          path: output-safari
+          retention-days: 30

@@ -1,5 +1,4 @@
 import 'dotenv/config'
-import { devices } from 'playwright'
 import { setHeadlessWhen, setWindowSize } from '@codeceptjs/configure'
 
 setHeadlessWhen(process.env.HEADLESS === 'true')
@@ -8,7 +7,7 @@ setWindowSize(1600, 1200)
 export const config: CodeceptJS.MainConfig = {
   name: 'codeceptjs-playwright-typescript-boilerplate',
   tests: './tests/**/**.spec.ts',
-  output: './output',
+  output: process.env.OUTPUT_PATH,
   helpers: {
     Playwright: {
       url: process.env.BASE_URL,

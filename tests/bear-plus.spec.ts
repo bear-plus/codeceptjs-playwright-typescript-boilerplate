@@ -1,6 +1,6 @@
 Feature('Bear Plus')
 
-Scenario('Renders and asserts Bear Plus home page', ({
+Scenario('Renders and asserts Bear Plus home page', async ({
   I,
   HomePage,
 }) => {
@@ -12,5 +12,5 @@ Scenario('Renders and asserts Bear Plus home page', ({
 
   // I.checkA11y()
 
-  I.runA11yCheck()
+  await I.runA11yCheck()
 })

@@ -9,6 +9,7 @@
     "test:safari": "npx codeceptjs run-workers 2 desktop:webkit",
     "report:generate": "allure generate ./output/allure -o ./output/allure-report --clean",
     "report:patch": "allure-patch ./output/allure-report",
+    "report:open": "allure open ./output/allure-report",
     "report:view": "npx allure-commandline serve"
   },
   "keywords": [

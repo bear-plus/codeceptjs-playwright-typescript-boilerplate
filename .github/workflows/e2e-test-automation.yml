@@ -2,6 +2,11 @@ name: E2E Test Automation
 
 on: [ push ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   chrome:
     timeout-minutes: 30
@@ -23,13 +28,13 @@ jobs:
         env:
           BASE_URL: ${{ vars.BASE_URL }}
           HEADLESS: ${{ vars.HEADLESS }}
-          OUTPUT_PATH: output-chrome
+          OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}
 
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: chrome-artifacts
-          path: output-chrome
+          path: ${{ vars.OUTPUT_PATH }}
           retention-days: 30
 
   firefox:
@@ -52,7 +57,7 @@ jobs:
         env:
           BASE_URL: ${{ vars.BASE_URL }}
           HEADLESS: ${{ vars.HEADLESS }}
-          OUTPUT_PATH: output-firefox
+          OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}
           # Workaround to fix GitHub Actions issue:
           # Running Nightly as root in a regular user's session is not supported.
           # See https://github.com/microsoft/playwright/issues/6500
@@ -62,7 +67,7 @@ jobs:
         if: always()
         with:
           name: firefox-artifacts
-          path: output-firefox
+          path: ${{ vars.OUTPUT_PATH }}
           retention-days: 30
 
   safari:
@@ -85,11 +90,70 @@ jobs:
         env:
           BASE_URL: ${{ vars.BASE_URL }}
           HEADLESS: ${{ vars.HEADLESS }}
-          OUTPUT_PATH: output-safari
+          OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}
 
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: safari-artifacts
-          path: output-safari
+          path: ${{ vars.OUTPUT_PATH }}
           retention-days: 30
+
+  report:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.1-jammy
+    environment:
+      url: ${{ steps.deployment.outputs.page_url }}
+      name: 'github-pages'
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Chrome scenarios
+        run: npm run test:chrome
+        env:
+          BASE_URL: ${{ vars.BASE_URL }}
+          HEADLESS: ${{ vars.HEADLESS }}
+          OUTPUT_PATH: ${{ vars.OUTPUT_PATH }}
+
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: report-artifacts
+          path: ${{ vars.OUTPUT_PATH }}
+          retention-days: 30
+
+      - name: Generate Allure report
+        if: always()
+        run: npm run report:generate
+
+      - name: Patch Allure report
+        if: always()
+        run: npm run report:patch
+
+      - name: Setup GitHub Pages
+        if: always()
+        uses: actions/configure-pages@v3
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        if: always()
+        with:
+          path: ${{ vars.OUTPUT_PATH }}/allure-report
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v2

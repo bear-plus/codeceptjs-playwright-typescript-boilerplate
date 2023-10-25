@@ -6,7 +6,10 @@
     "test": "npx codeceptjs run-multiple desktop --steps",
     "test:chrome": "npx codeceptjs run-workers 2 desktop:chromium",
     "test:firefox": "npx codeceptjs run-workers 2 desktop:firefox",
-    "test:safari": "npx codeceptjs run-workers 2 desktop:webkit"
+    "test:safari": "npx codeceptjs run-workers 2 desktop:webkit",
+    "report:generate": "allure generate ./output/allure -o ./output/allure-report --clean",
+    "report:patch": "allure-patch ./output/allure-report",
+    "report:view": "npx allure-commandline serve"
   },
   "keywords": [
     "qa",
@@ -24,8 +27,12 @@
   },
   "devDependencies": {
     "@types/node": "^20.5.0",
+    "allure-codeceptjs": "^2.9.2",
+    "allure-commandline": "^2.24.1",
+    "allure-patch": "^1.0.3",
     "axe-playwright": "^1.2.3",
     "codeceptjs": "^3.5.5",
+    "codeceptjs-a11y-helper": "^1.5.3",
     "dotenv": "^16.3.1",
     "playwright": "^1.38.1",
     "ts-node": "^10.9.1",

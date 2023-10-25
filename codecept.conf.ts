@@ -19,14 +19,17 @@ export const config: CodeceptJS.MainConfig = {
       emulate: {
         deviceScaleFactor: process.env.DEVICE_SCALE_FACTOR ? parseInt(process.env.DEVICE_SCALE_FACTOR) : 1,
         recordHar: process.env.RECORD_HAR === 'true' ? {
-          path: './output/har/requests.har',
+          path: `${process.env.OUTPUT_PATH}/har/requests.har`,
           mode: 'full',
         } : undefined,
       },
       waitForTimeout: 45_000,
       waitForNavigation: 'load',
       keepVideoForPassedTests: false,
-      keepTraceForPassedTests: false,
+      keepTraceForPassedTests: true,
+    },
+    A11yHelper: {
+      require: 'codeceptjs-a11y-helper',
     },
   },
   include: {
@@ -51,6 +54,11 @@ export const config: CodeceptJS.MainConfig = {
     },
     stepByStepReport: {
       enabled: true
+    },
+    allure: {
+      enabled: true,
+      require: 'allure-codeceptjs',
+      outputDir: `${process.env.OUTPUT_PATH}/allure`,
     },
   }
 }

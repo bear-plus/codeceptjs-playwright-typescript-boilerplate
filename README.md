@@ -6,17 +6,18 @@ Modern E2E Test Automation suite that supports cross-browser testing, parallel e
 ## Tech stack
 - [CodeceptJS](https://codecept.io)
 - [Playwright](https://playwright.dev)
-- [Axe](https://www.deque.com/axe)
+- [Deque Axe](https://www.deque.com/axe)
 - [Typescript](https://www.typescriptlang.org)
 
 ## Features
 - ✅ Cross-browser testing (Chrome, Firefox, Safari)
 - ✅ Headless and headful modes
 - ✅ Parallel execution
-- ✅ Accessibility testing with Axe
 - ✅ Screenshot and video recording
 - ✅ Playwright tracing
 - ✅ HTTP Archive (HAR) files generation and replay
+- ✅ Accessibility testing with Axe
+- ✅ Reporting with Allure Report
 
 ## Installation
 
@@ -48,6 +49,8 @@ ACCESSIBILITY=false
 # keep 1 for most monitors
 # set to 2 for MacBook Pro screen to avoid flickering
 DEVICE_SCALE_FACTOR=1
+# Reports, traces, screenshots, videos output path
+OUTPUT_PATH=output
 # Generate HTTP Archive (HAR) file from test scenario
 RECORD_HAR=false
 # HAR file path
@@ -57,11 +60,6 @@ HAR_PATH=output/har/requests.har
 ### Run all test scenarios on all browsers
 ```sh
 npm run test:all
-```
-
-### Run all test scenarios in parallel
-```sh
-npm run test:parallel
 ```
 
 ### Run a specific browser
@@ -75,3 +73,7 @@ npm run test:safari
 ```sh
 npx codeceptjs run tests/bear-plus.spec.ts --steps
 ```
+
+## Pipeline
+
+[![Pipeline](https://github.com/bear-plus/codeceptjs-playwright-typescript-boilerplate/actions/workflows/e2e-test-automation.yml/badge.svg)](https://github.com/bear-plus/codeceptjs-playwright-typescript-boilerplate/actions/workflows/e2e-test-automation.yml)

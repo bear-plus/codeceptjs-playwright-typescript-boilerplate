@@ -10,5 +10,7 @@ Scenario('Renders and asserts Bear Plus home page', ({
 
   HomePage.assert()
 
-  I.checkA11y()
+  // I.checkA11y()
+
+  I.runA11yCheck()
 })

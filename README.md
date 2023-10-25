@@ -57,12 +57,7 @@ RECORD_HAR=false
 HAR_PATH=output/har/requests.har
 ```
 
-### Run all test scenarios on all browsers
-```sh
-npm run test:all
-```
-
-### Run a specific browser
+### Run test scenarios by browser
 ```sh
 npm run test:chrome
 npm run test:firefox

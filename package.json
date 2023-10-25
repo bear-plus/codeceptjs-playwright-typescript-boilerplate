@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CodeceptJS Playwright Typescript Boilerplate",
   "scripts": {
-    "test": "npx codeceptjs run-multiple desktop --steps",
+    "test": "npx codeceptjs run tests/bear-plus.spec.ts --steps",
     "test:chrome": "npx codeceptjs run-workers 2 desktop:chromium",
     "test:firefox": "npx codeceptjs run-workers 2 desktop:firefox",
     "test:safari": "npx codeceptjs run-workers 2 desktop:webkit",

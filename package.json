@@ -7,10 +7,9 @@
     "test:chrome": "npx codeceptjs run-workers 2 desktop:chromium",
     "test:firefox": "npx codeceptjs run-workers 2 desktop:firefox",
     "test:safari": "npx codeceptjs run-workers 2 desktop:webkit",
-    "report:generate": "allure generate ./output/allure -o ./output/allure-report --clean",
+    "report:generate": "allure generate ./output/allure-raw -o ./output/allure-report --clean",
     "report:patch": "allure-patch ./output/allure-report",
-    "report:open": "allure open ./output/allure-report",
-    "report:view": "npx allure-commandline serve"
+    "report:open": "allure open ./output/allure-report"
   },
   "keywords": [
     "qa",

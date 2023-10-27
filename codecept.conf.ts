@@ -30,6 +30,7 @@ export const config: CodeceptJS.MainConfig = {
     },
     A11yHelper: {
       require: 'codeceptjs-a11y-helper',
+      outputDir: `${process.env.OUTPUT_PATH}/accessibility-audit`,
     },
   },
   include: {
@@ -58,7 +59,7 @@ export const config: CodeceptJS.MainConfig = {
     allure: {
       enabled: true,
       require: 'allure-codeceptjs',
-      outputDir: `${process.env.OUTPUT_PATH}/allure`,
+      outputDir: `${process.env.OUTPUT_PATH}/allure-raw`,
     },
   }
 }
